@@ -17,7 +17,7 @@ class ActionSelectionActivity : AppCompatActivity() {
 
     data class ActionItem(val label: String, val code: String, val iconRes: Int)
 
-    private val actions get() = listOf(
+    private fun actions(isPieSlot: Boolean) = listOf(
         ActionItem(getString(R.string.action_none), "none", R.drawable.ic_action_dot),
         ActionItem(getString(R.string.action_back), "back", R.drawable.ic_arrow_back),
         ActionItem(getString(R.string.action_home), "home", R.drawable.ic_home),
@@ -25,6 +25,7 @@ class ActionSelectionActivity : AppCompatActivity() {
         ActionItem(getString(R.string.action_expand_notifications), "expand_notifications", R.drawable.ic_notifications),
         ActionItem(getString(R.string.action_shell_command), "shell_command", R.drawable.ic_terminal),
         ActionItem(getString(R.string.action_sub_gesture), "sub_gesture", R.drawable.ic_sub_gesture),
+        ActionItem(getString(R.string.action_pie), "pie", R.drawable.ic_pie_menu),
         ActionItem(getString(R.string.action_launch_app), "launch_app", R.drawable.ic_launch_app),
         ActionItem(getString(R.string.action_app_shortcut), "app_shortcut", R.drawable.ic_app_shortcut),
         ActionItem(getString(R.string.action_clear_background), "clear_background", R.drawable.ic_clear_recent),
@@ -40,7 +41,7 @@ class ActionSelectionActivity : AppCompatActivity() {
         ActionItem(getString(R.string.action_volume_up), "volume_up", R.drawable.ic_volume_up),
         ActionItem(getString(R.string.action_volume_down), "volume_down", R.drawable.ic_volume_down),
         ActionItem(getString(R.string.action_music_control), "music_control", R.drawable.ic_music),
-    )
+    ).let { list -> if (isPieSlot) list.filter { it.code != "pie" } else list }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +64,7 @@ class ActionSelectionActivity : AppCompatActivity() {
         // List
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ActionAdapter(actions) { item ->
+        recyclerView.adapter = ActionAdapter(actions(prefKey.startsWith("pie_"))) { item ->
             when (item.code) {
                 "app_shortcut" -> {
                     startActivity(Intent(this, ShortcutSelectionActivity::class.java)
@@ -81,6 +82,11 @@ class ActionSelectionActivity : AppCompatActivity() {
                     startActivity(Intent(this, SubGestureActivity::class.java)
                         .putExtra("pref_key", prefKey)
                         .putExtra("title", title))
+                    finish()
+                }
+                "pie" -> {
+                    putConfig(prefKey, "pie")
+                    putConfig("${prefKey}_label", getString(R.string.action_pie))
                     finish()
                 }
                 "launch_app" -> {
