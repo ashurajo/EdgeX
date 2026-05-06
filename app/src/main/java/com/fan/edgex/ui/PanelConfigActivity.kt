@@ -262,8 +262,8 @@ class PanelConfigActivity : AppCompatActivity() {
         action.startsWith("music_control:") -> R.drawable.ic_music
         action.startsWith("multi_action:") -> R.drawable.ic_multi_action
         action == AppConfig.CUSTOM_PANEL_ACTION -> R.drawable.ic_apps
-        action == AppConfig.SIDE_BAR_LEFT_ACTION -> R.drawable.ic_edge_left_full
-        action == AppConfig.SIDE_BAR_RIGHT_ACTION -> R.drawable.ic_edge_right_full
+        action == AppConfig.SIDE_BAR_LEFT_ACTION -> R.drawable.ic_side_bar_left
+        action == AppConfig.SIDE_BAR_RIGHT_ACTION -> R.drawable.ic_side_bar_right
         else -> R.drawable.ic_action_dot
     }
 

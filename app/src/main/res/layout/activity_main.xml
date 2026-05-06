@@ -250,7 +250,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_edge_left_full"
+                            android:src="@drawable/ic_side_bar_left"
                             app:tint="@color/ui_icon_tint" />
                 </FrameLayout>
 
@@ -284,7 +284,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_edge_right_full"
+                            android:src="@drawable/ic_side_bar_right"
                             app:tint="@color/ui_icon_tint" />
                 </FrameLayout>
 

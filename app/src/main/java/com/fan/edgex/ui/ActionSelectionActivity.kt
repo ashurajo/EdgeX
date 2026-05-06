@@ -47,8 +47,8 @@ class ActionSelectionActivity : AppCompatActivity() {
         ActionItem(getString(R.string.action_multi_action), "multi_action", R.drawable.ic_multi_action),
         ActionItem(getString(R.string.action_condition), "condition", R.drawable.ic_condition),
         ActionItem(getString(R.string.action_custom_panel), AppConfig.CUSTOM_PANEL_ACTION, R.drawable.ic_apps),
-        ActionItem(getString(R.string.action_left_side_bar), AppConfig.SIDE_BAR_LEFT_ACTION, R.drawable.ic_edge_left_full),
-        ActionItem(getString(R.string.action_right_side_bar), AppConfig.SIDE_BAR_RIGHT_ACTION, R.drawable.ic_edge_right_full),
+        ActionItem(getString(R.string.action_left_side_bar), AppConfig.SIDE_BAR_LEFT_ACTION, R.drawable.ic_side_bar_left),
+        ActionItem(getString(R.string.action_right_side_bar), AppConfig.SIDE_BAR_RIGHT_ACTION, R.drawable.ic_side_bar_right),
     ).let { list -> if (isPieSlot) list.filter { it.code != "pie" } else list }
 
     override fun onCreate(savedInstanceState: Bundle?) {

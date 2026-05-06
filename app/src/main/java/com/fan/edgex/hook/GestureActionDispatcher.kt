@@ -366,6 +366,8 @@ internal class GestureActionDispatcher(
         action.startsWith("shell:")          -> R.drawable.ic_terminal
         action.startsWith("app_shortcut:")   -> R.drawable.ic_app_shortcut
         action.startsWith("launch_app:")     -> R.drawable.ic_launch_app
+        action == AppConfig.SIDE_BAR_LEFT_ACTION -> R.drawable.ic_side_bar_left
+        action == AppConfig.SIDE_BAR_RIGHT_ACTION -> R.drawable.ic_side_bar_right
         else                                 -> 0
     }
 
