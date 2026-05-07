@@ -19,9 +19,9 @@
 ## 预览
 
 <p align="center">
-  <img src="docs/gif/preview_1.gif" alt="EdgeX 预览 1" height="540" />
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="docs/gif/preview_2.gif" alt="EdgeX 预览 2" height="540" />
+  <img src="docs/gif/preview_1.gif" alt="EdgeX 预览 1" height="340" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/gif/preview_2.gif" alt="EdgeX 预览 2" height="340" />
 </p>
 
 ## 简介
