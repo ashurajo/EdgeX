@@ -41,6 +41,7 @@ class DrawerWindow(
     private var rootView: FrameLayout? = null
     private var drawerPanel: View? = null
     private var contentLeftBound = 0
+    private var drawerPanelWidth = 0
     private var configReceiver: android.content.BroadcastReceiver? = null
 
     private val MOCK_MODE = false
@@ -97,6 +98,7 @@ class DrawerWindow(
             val panelFraction = if (isLandscape) 0.62f else 0.70f
             val panelWidth = (displayMetrics.widthPixels * panelFraction).toInt()
             contentLeftBound = displayMetrics.widthPixels - panelWidth
+            drawerPanelWidth = panelWidth
             setupModernLayout(displayApps, pm, panelWidth)
         }
 
@@ -116,9 +118,8 @@ class DrawerWindow(
             windowManager.addView(rootView, params)
             if (!useArcDrawer) {
                 drawerPanel?.let { panel ->
-                    val panelWidth = (displayMetrics.widthPixels * 0.62f).toInt()
-                    panel.translationX = panelWidth.toFloat()
-                    ValueAnimator.ofFloat(panelWidth.toFloat(), 0f).apply {
+                    panel.translationX = drawerPanelWidth.toFloat()
+                    ValueAnimator.ofFloat(drawerPanelWidth.toFloat(), 0f).apply {
                         duration = 340
                         interpolator = DecelerateInterpolator(2.2f)
                         addUpdateListener { panel.translationX = it.animatedValue as Float }
@@ -139,13 +140,13 @@ class DrawerWindow(
         val dp = context.resources.displayMetrics.density
         val dark = isDarkMode
 
-        val surfaceBg     = if (dark) Color.argb(238, 20, 19, 30)    else Color.argb(238, 250, 248, 255)
-        val textPrimary   = if (dark) Color.WHITE                     else "#1C1B1F".toColorInt()
-        val textMuted     = if (dark) "#9A97AA".toColorInt()     else "#6B6880".toColorInt()
-        val cardBg        = if (dark) Color.argb(160, 42, 40, 58)    else Color.argb(170, 230, 226, 244)
-        val dividerColor  = if (dark) Color.argb(35, 255, 255, 255)  else Color.argb(40, 0, 0, 0)
-        val frozenBadgeBg = Color.argb(210, 12, 18, 52)
-        val cornerRad     = 28f * dp
+        val surfaceBg     = if (dark) OverlayTheme.SURFACE_BG_DARK  else OverlayTheme.SURFACE_BG_LIGHT
+        val textPrimary   = if (dark) OverlayTheme.TEXT_PRIMARY_DARK   else OverlayTheme.TEXT_PRIMARY_LIGHT
+        val textMuted     = if (dark) OverlayTheme.TEXT_SECONDARY_DARK else OverlayTheme.TEXT_SECONDARY_LIGHT
+        val cardBg        = if (dark) OverlayTheme.CARD_BG_DARK  else OverlayTheme.CARD_BG_LIGHT
+        val dividerColor  = if (dark) OverlayTheme.DIVIDER_DARK  else OverlayTheme.DIVIDER_LIGHT
+        val frozenBadgeBg = OverlayTheme.FROZEN_BADGE_BG
+        val cornerRad     = OverlayTheme.CORNER_SHEET_DP * dp
 
         val panel = FrameLayout(context).apply {
             layoutParams = FrameLayout.LayoutParams(panelWidth, ViewGroup.LayoutParams.MATCH_PARENT).apply {
@@ -162,7 +163,7 @@ class DrawerWindow(
                 }
             }
             clipToOutline = true
-            elevation = 20f * dp
+            elevation = OverlayTheme.ELEVATION_DP * dp
             isClickable = true
         }
         drawerPanel = panel

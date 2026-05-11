@@ -125,7 +125,7 @@ private class PanelOverlayWindow(
             width = WindowManager.LayoutParams.MATCH_PARENT
             height = WindowManager.LayoutParams.MATCH_PARENT
             flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
-            dimAmount = if (mode is PanelMode.SideBar) 0f else 0.18f
+            dimAmount = if (mode is PanelMode.SideBar) OverlayTheme.DIM_SIDEBAR else OverlayTheme.DIM_PANEL
         }
 
         try {
@@ -158,8 +158,11 @@ private class PanelOverlayWindow(
                 panel.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(140).start()
             }
             is PanelMode.SideBar -> {
-                val offset = if (currentMode.side == "left") -panel.measuredWidth else panel.measuredWidth
-                panel.translationX = offset.toFloat()
+                // measuredWidth is 0 before layout; use screen width to guarantee
+                // the panel is off-screen on the very first draw frame.
+                val screenWidth = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+                    .currentWindowMetrics.bounds.width().toFloat()
+                panel.translationX = if (currentMode.side == "left") -screenWidth else screenWidth
                 panel.post {
                     val start = if (currentMode.side == "left") -panel.width.toFloat() else panel.width.toFloat()
                     ValueAnimator.ofFloat(start, 0f).apply {
@@ -230,8 +233,8 @@ private class PanelOverlayWindow(
         val panel = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             setPadding((14 * dp).toInt(), (16 * dp).toInt(), (14 * dp).toInt(), (16 * dp).toInt())
-            background = roundedBg(Color.argb(242, 48, 54, 68), 18f)
-            elevation = 18f * dp
+            background = roundedBg(OverlayTheme.SURFACE_BG_DARK, OverlayTheme.CORNER_POPUP_DP)
+            elevation = OverlayTheme.ELEVATION_DP * dp
         }
         var row: LinearLayout? = null
         items.forEachIndexed { index, item ->
@@ -266,8 +269,8 @@ private class PanelOverlayWindow(
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
             setPadding((10 * dp).toInt(), (16 * dp).toInt(), (10 * dp).toInt(), (16 * dp).toInt())
-            background = roundedBg(Color.argb(246, 49, 55, 70), 10f)
-            elevation = 18f * dp
+            background = roundedBg(OverlayTheme.SURFACE_BG_DARK, OverlayTheme.CORNER_BAR_DP)
+            elevation = OverlayTheme.ELEVATION_DP * dp
         }
         items.forEachIndexed { index, item ->
             panel.addView(createActionButton(item, (56 * dp).toInt(), showText = false), LinearLayout.LayoutParams(
